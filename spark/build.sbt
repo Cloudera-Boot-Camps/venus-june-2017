@@ -21,6 +21,15 @@ libraryDependencies += "org.apache.spark" % "spark-streaming_2.10" % "1.6.3"
 //
 libraryDependencies += "org.apache.spark" % "spark-hive_2.10" % "1.6.3"
 
+//
+libraryDependencies += "org.apache.spark" % "spark-streaming-kafka_2.10" % "1.6.3"
+
+// bhase
+// https://mvnrepository.com/artifact/org.apache.hbase/hbase-common
+libraryDependencies += "org.apache.hbase" % "hbase-common" % "1.2.0"
+// https://mvnrepository.com/artifact/org.apache.hbase/hbase-client
+libraryDependencies += "org.apache.hbase" % "hbase-client" % "1.2.0"
+
 // kudu
 //libraryDependencies += "org.apache.kudu" % "kudu-client" % "1.2.0-cdh5.10.0"
 

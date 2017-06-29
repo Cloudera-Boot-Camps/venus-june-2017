@@ -9,5 +9,5 @@ The larger table (measurements) was ingested by sqoop. We create dataframes dire
 for the smaller tables directly from Oracle and tranform the datatypes and
 join them together with the measurements table by broadcasting the smaller tables.
 
-There is also an equivalent python spark script. 
+There is also an equivalent python spark script [here] (../spark.py)
 

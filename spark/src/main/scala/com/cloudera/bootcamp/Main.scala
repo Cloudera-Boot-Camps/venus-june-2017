@@ -42,7 +42,7 @@ object Main extends App {
   val measurements = sqlContext.sql("SELECT * FROM gravity.measure_sm") // hive, sqooped in
   measurements.cache()
 
-  sqlContext.read.parquet("/user/hive/warehouse/gravity/measure_sm")
+  sqlContext.read.text("/user/hive/warehouse/gravity.db/measure_sm/ee4a481fad68b0af-e3a7241300000003_2073792386_data.0.")
 
 
 //  val rdd = measurements.map(row => {
