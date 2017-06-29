@@ -24,17 +24,14 @@ object Streaming extends App {
 
   val ssc = new StreamingContext(conf, Seconds(1))
 
-  //  val kafkaParams = Map[String, String]("metadata.broker.list" -> "ip-172-31-38-164.us-west-2.compute.internal:9092,ip-172-31-37-179.us-west-2.compute.internal:9092,ip-172-31-42-170.us-west-2.compute.internal:9092")
-  //
-  //  val topicsSet = Set("gravity")
-  //
-  //  val stream = KafkaUtils.createDirectStream[String, String, StringDecoder, StringDecoder](ssc, kafkaParams, topicsSet)
+  val kafkaParams = Map[String, String]("metadata.broker.list" -> "ip-172-31-38-164.us-west-2.compute.internal:9092,ip-172-31-37-179.us-west-2.compute.internal:9092,ip-172-31-42-170.us-west-2.compute.internal:9092")
+  val topicsSet = Set("gravity")
+  val stream = KafkaUtils.createDirectStream[String, String, StringDecoder, StringDecoder](ssc, kafkaParams, topicsSet)
 
-  val topicMap = Map[String, Int]("gravity" -> 1)
+  //  val topicMap = Map[String, Int]("gravity" -> 1)
+  //  val stream = KafkaUtils.createStream(ssc, "ip-172-31-40-237.us-west-2.compute.internal:2181", "cloudera_mirrormaker", topicMap)
 
-  val stream2 = KafkaUtils.createStream(ssc, "ip-172-31-40-237.us-west-2.compute.internal:2181", "cloudera_mirrormaker", topicMap)
-
-  val lines = stream2.map(_._2)
+  val lines = stream.map(_._2)
 
 
   write2hbase(lines)
@@ -55,7 +52,7 @@ object Streaming extends App {
 
           rdd.foreach(line => {
 
-            println("???????????????????"+line)
+            println("???????????????????" + line)
 
             val con = ConnectionFactory.createConnection()
             val table = con.getTable(TableName.valueOf("measurements"))
