@@ -4,6 +4,8 @@ version := "1.0"
 
 scalaVersion := "2.10.6"
 
+resolvers += "cloudera repo" at "https://repository.cloudera.com/artifactory/cloudera-repos"
+
 
 // spark
 //libraryDependencies += "org.apache.spark" % "spark-core_2.10" % "2.1.0"
@@ -31,7 +33,8 @@ libraryDependencies += "org.apache.hbase" % "hbase-common" % "1.2.0"
 libraryDependencies += "org.apache.hbase" % "hbase-client" % "1.2.0"
 
 // kudu
-//libraryDependencies += "org.apache.kudu" % "kudu-client" % "1.2.0-cdh5.10.0"
+libraryDependencies += "org.apache.kudu" % "kudu-client" % "1.2.0-cdh5.10.0"
+libraryDependencies += "org.apache.kudu" % "kudu-spark_2.10" % "1.2.0-cdh5.10.0"
 
 // spark databricks csv reader
 // libraryDependencies += "com.databricks" % "spark-csv_2.10" % "1.5.0"
