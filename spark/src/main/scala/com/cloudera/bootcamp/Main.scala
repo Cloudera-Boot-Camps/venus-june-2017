@@ -42,6 +42,8 @@ object Main extends App {
   val measurements = sqlContext.sql("SELECT * FROM gravity.measure_sm") // hive, sqooped in
   measurements.cache()
 
+  sqlContext.read.parquet("/user/hive/warehouse/gravity/measure_sm")
+
 
 //  val rdd = measurements.map(row => {
 //    // where cast(amplitude_1 as decimal(20,16)) > 0.995 and cast(amplitude_3 as decimal(20,16)) > 0.995 and cast(amplitude_2 as decimal(20,16)) < 0.005
