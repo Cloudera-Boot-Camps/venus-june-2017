@@ -1,7 +1,5 @@
 package com.cloudera.bootcamp
 
-import java.util
-
 import kafka.serializer.StringDecoder
 import org.apache.hadoop.hbase.TableName
 import org.apache.spark.SparkConf
@@ -9,7 +7,6 @@ import org.apache.spark.streaming.kafka._
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 import org.apache.hadoop.hbase.client._
 import org.apache.hadoop.hbase.util.Bytes
-import org.apache.spark.storage.StorageLevel
 import org.apache.spark.streaming.dstream.DStream
 
 
@@ -33,28 +30,23 @@ object Streaming extends App {
 
   val lines = stream.map(_._2)
 
-
   write2hbase(lines)
 
   ssc.start() // Start the computation
   ssc.awaitTermination() // Wait for the computation to terminate
 
-
   def write2hbase(stream: DStream[String]): Unit = {
 
+    stream.foreachRDD((rdd, time) => {
 
-    try {
+      if (!rdd.isEmpty()) {
 
-      stream.foreachRDD((rdd, time) => {
+        rdd.foreach(line => {
 
-
-        if (!rdd.isEmpty()) {
-
-          rdd.foreach(line => {
-
+          val con = ConnectionFactory.createConnection()
+          try {
             println("???????????????????" + line)
 
-            val con = ConnectionFactory.createConnection()
             val table = con.getTable(TableName.valueOf("measurements"))
             val cells = line.split(",")
             val put = new Put(Bytes.toBytes(cells(0)))
@@ -67,18 +59,17 @@ object Streaming extends App {
             put.addColumn(cf, Bytes.toBytes("amplitude_2"), Bytes.toBytes(cells(6)))
             put.addColumn(cf, Bytes.toBytes("amplitude_3"), Bytes.toBytes(cells(7)))
             table.put(put)
+          } catch {
+            case e: Exception => println(e)
+          }
+          finally {
             con.close()
-          })
-        }
+          }
 
-      })
+        })
+      }
 
-    }
-    catch {
-      case e: Exception => println(e)
-    }
-    finally {
-    }
+    })
 
   }
 
