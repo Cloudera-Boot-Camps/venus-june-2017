@@ -1,8 +1,8 @@
 # Cloudera FCE Bootcamp Shared repository for Pipeline processing
 
-[Ingestion Notes](ingestion/README.md)
+[Ingestion](ingestion/README.md)
 
-[Batch Notes](batch/README.md)
+[Batch](batch/README.md)
 
 [Streaming](streaming/README.md)
 

@@ -1,3 +1,25 @@
+# Ingestion
+Use the AWS cluster that your group has been assigned
+
+Ingest measurements and reference data from Oracle
+500 million measurements, 8 detectors, 128 galaxies, 106 astrophysicists
+Tables: measurements, detectors, galaxies, astrophysicists
+Will provide Oracle connection string and credentials
+
+Make the tables available to Impala for querying in Hue
+
+## use case model
+One record is one measurement
+
+Each measurement is
+* At a point in time
+* Made up of three signal amplitudes
+* From a gravitational wave detector somewhere in the world
+* Being performed by an astrophysicist
+* Listening to a nearby galaxy
+
+A gravitational wave is detected when the first and third amplitudes are > 0.995, and the second amplitude is < 0.005
+
 # sqoop
 Using the direct method took only 15min to ingest the measurements table. Sqooped the other tables similarly
 ```
