@@ -13,7 +13,7 @@ Knowing python is advantageous in engagements where there is NOT a way to compil
 we created an OOZIE flow that called the sqoop ingestion below then the python script above. Total execution time was around 30 min.
 
 2 sets of artifacts:
-* [ruslan](batch/oozie)
+* [ruslan](oozie)
 * [arunssundar](oozie2/workflow.xml)
 
 # sqoop
