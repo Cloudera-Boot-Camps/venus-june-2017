@@ -23,7 +23,10 @@ $> mvn exec:java \
 
 
 # Spark
-This task we used Scala as the spark application.
+This task we used Scala as the spark application. 
+
+* [kafka direct to HBase](../spark/src/main/scala/com/cloudera/bootcamp/Main.scala)
+* [kafka direct to Kudu](../spark/src/main/scala/com/cloudera/bootcamp/Kudu.scala)
 
 # Kafka
 ## Kafka brokers
