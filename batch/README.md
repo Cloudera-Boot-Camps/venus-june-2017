@@ -5,7 +5,7 @@ The pipelined we decided to use was sqoop for the measurements table and spark/j
 We implemented 2 versions of the spark application; python and scala. Both apps have exactly the same logic. We ran into issues with long running times. Broadcasting the join tables greatly improved the exec time to 15-20 min from small table ingestion, transformation of datatypes to joining of the all 4 tables.
 
 * [Python](batch.py)
-* Scala see spark project [here](../spark)
+* Scala see spark project [here](../spark). Scala code [here](../src/main/scala/com/cloudera/bootcamp/Main.scala)
 
 Knowing python is advantageous in engagements where there is NOT a way to compile scala code on an edgenode.
 
