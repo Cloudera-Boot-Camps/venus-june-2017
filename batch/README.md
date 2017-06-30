@@ -11,7 +11,10 @@ We implemented 2 versions of the spark application; python and scala. Both apps 
 ## implementation 
 scala 
 ```
-val flagged = measurements.withColumn("flag", measurements("amplitude_1") > 0.995 && measurements("amplitude_3") > 0.995 && measurements("amplitude_2") < 0.005)
+val flagged = measurements.withColumn("flag", 
+  measurements("amplitude_1") > 0.995 && 
+  measurements("amplitude_3") > 0.995 && 
+  measurements("amplitude_2") < 0.005)
 val joined = flagged.
     join(org.apache.spark.sql.functions.broadcast(galaxies), Seq("galaxy_id")).
     join(org.apache.spark.sql.functions.broadcast(detectors), Seq("detector_id")).
