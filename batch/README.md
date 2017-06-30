@@ -7,6 +7,27 @@ We implemented 2 versions of the spark application; python and scala. Both apps 
 * [Python](batch.py)
 * Scala see spark project [here](../spark). Scala code [here](../spark/src/main/scala/com/cloudera/bootcamp/Main.scala)
 
+
+## implementation 
+scala 
+```
+val flagged = measurements.withColumn("flag", measurements("amplitude_1") > 0.995 && measurements("amplitude_3") > 0.995 && measurements("amplitude_2") < 0.005)
+val joined = flagged.
+    join(org.apache.spark.sql.functions.broadcast(galaxies), Seq("galaxy_id")).
+    join(org.apache.spark.sql.functions.broadcast(detectors), Seq("detector_id")).
+    join(org.apache.spark.sql.functions.broadcast(astrophysicists), Seq("astrophysicist_id"))
+```
+
+python
+```
+# Add Flag
+flagged=dfs[0].withColumn('flag', (dfs[0].amplitude_1 > 0.995) & (dfs[0].amplitude_3 > 0.995) & (dfs[0].amplitude_2 < 0.005) )
+
+# Join Tables
+joined_table = flagged.join(broadcast(dfs[1]), ["galaxy_id"]).join(broadcast(dfs[2]), ["detector_id"]).join(broadcast(dfs[3]),["astrophysicist_id"])
+
+```
+
 Knowing python is advantageous in engagements where there is NOT a way to compile scala code on an edgenode.
 
 # OOZIE
