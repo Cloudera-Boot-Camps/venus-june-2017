@@ -128,15 +128,6 @@
    -->
  <uniqueKey>id</uniqueKey>
 
-
-  <copyField source="detector_id" dest="measurements"/>
- <copyField source="galaxy_id" dest="measurements"/>
- <copyField source="astrophysicist_id" dest="measurements"/>
- <copyField source="measurement_time" dest="measurements"/>
- <copyField source="aplitude_1" dest="measurements"/>
- <copyField source="aplitude_2" dest="measurements"/>
-  <copyField source="aplitude_3" dest="measurements"/>
-
  <!-- DEPRECATED: The defaultSearchField is consulted by various query parsers when
   parsing a query string that isn't explicit about the field.  Machine (non-user)
   generated queries are best made explicit, or they can use the "df" request parameter
