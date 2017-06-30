@@ -1,4 +1,4 @@
-spark/target
-spark/.idea
+*/target
+*/.idea
 *.pem
 These_are_the_external_internal_hostnames.txt
