@@ -107,35 +107,15 @@
    -->
 
    <field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false" />
-   <field name="time" type="tdate" indexed="true" stored="true" />
-   <field name="record" type="text_general" indexed="true" stored="false" multiValued="true"/>
-   <field name="client_ip" type="string" indexed="true" stored="true" />
-   <field name="code" type="string" indexed="true" stored="true" />
-   <field name="user_agent" type="string" indexed="true" stored="true" />
-   <field name="protocol" type="string" indexed="true" stored="true" />
-   <field name="url" type="string" indexed="true" stored="true" />
-   <field name="request" type="string" indexed="true" stored="true" />
-   <field name="referer" type="string" indexed="true" stored="true" />
-   <field name="bytes" type="tint" indexed="true" stored="true" />
-   <field name="method" type="string" indexed="true" stored="true" />
-
-   <field name="extension" type="string" indexed="true" stored="true" />
-   <field name="app" type="string" indexed="true" stored="true" />
-   <field name="subapp" type="string" indexed="true" stored="true" />
-
-   <field name="device_family" type="string" indexed="true" stored="true" />
-   <field name="user_agent_major" type="string" indexed="true" stored="true" />
-   <field name="user_agent_family" type="string" indexed="true" stored="true" />
-   <field name="os_family" type="string" indexed="true" stored="true" />
-   <field name="os_major" type="string" indexed="true" stored="true" />
-
-   <field name="region_code" type="string" indexed="true" stored="true" />
-   <field name="country_code" type="string" indexed="true" stored="true" />
-   <field name="city" type="string" indexed="true" stored="true" />
-   <field name="latitude" type="float" indexed="true" stored="true" />
-   <field name="longitude" type="float" indexed="true" stored="true" />
-   <field name="country_name" type="string" indexed="true" stored="true" />
-   <field name="country_code3" type="string" indexed="true" stored="true" />
+   
+   <field name="detector_id" type="text_general" indexed="true" stored="true" multiValued="true"/>
+  <field name="galaxy_id" type="text_general" indexed="true" stored="true" multiValued="true"/>
+  <field name="astrophysicist_id" type="text_general" indexed="true" stored="true" multiValued="true"/>
+  <field name="measurement_time" type="text_general" indexed="true" stored="true" multiValued="true"/>
+  <field name="aplitude_1" type="text_general" indexed="true" stored="true" multiValued="true"/>
+  <field name="aplitude_2" type="text_general" indexed="true" stored="true" multiValued="true"/>
+  <field name="aplitude_3" type="text_general" indexed="true" stored="true" multiValued="true"/>
+  
 
    <field name="_version_" type="long" indexed="true" stored="true"/>
    <dynamicField name="ignored_*" type="ignored"/>
@@ -149,30 +129,13 @@
  <uniqueKey>id</uniqueKey>
 
 
-  <copyField source="time" dest="record"/>
-  <copyField source="client_ip" dest="record"/>
-  <copyField source="code" dest="record"/>
-  <copyField source="user_agent" dest="record"/>
-  <copyField source="url" dest="record"/>
-  <copyField source="protocol" dest="record"/>
-  <copyField source="referer" dest="record"/>
-  <copyField source="request" dest="record"/>
-  <copyField source="bytes" dest="record"/>
-  <copyField source="method" dest="record"/>
-  <copyField source="extension" dest="record"/>
-  <copyField source="app" dest="record"/>
-  <copyField source="subapp" dest="record"/>
-  <copyField source="device_family" dest="record"/>
-  <copyField source="user_agent_major" dest="record"/>
-  <copyField source="user_agent_family" dest="record"/>
-  <copyField source="os_family" dest="record"/>
-  <copyField source="os_major" dest="record"/>
-  <copyField source="region_code" dest="record"/>
-  <copyField source="country_code" dest="record"/>
-  <copyField source="city" dest="record"/>
-  <copyField source="latitude" dest="record"/>
-  <copyField source="longitude" dest="record"/>
-  <copyField source="country_name" dest="record"/>
+  <copyField source="detector_id" dest="measurements"/>
+ <copyField source="galaxy_id" dest="measurements"/>
+ <copyField source="astrophysicist_id" dest="measurements"/>
+ <copyField source="measurement_time" dest="measurements"/>
+ <copyField source="aplitude_1" dest="measurements"/>
+ <copyField source="aplitude_2" dest="measurements"/>
+  <copyField source="aplitude_3" dest="measurements"/>
 
  <!-- DEPRECATED: The defaultSearchField is consulted by various query parsers when
   parsing a query string that isn't explicit about the field.  Machine (non-user)
