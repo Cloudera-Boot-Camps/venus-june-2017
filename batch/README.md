@@ -40,6 +40,19 @@ we created an OOZIE flow that called the sqoop ingestion below then the python s
 * [ruslan](oozie)
 * [arunssundar](oozie2/workflow.xml)
 
+### Notes
+PFB the directory structure of the workflow.xml.
+
+  --> gwProcess/workflow.xml
+  --> sqoopIngest/workflow.xml
+  --> sqoopIngest/lib/hive-site.xml
+  --> sqoopIngest/lib/ojdbc6.jar
+
+
+The workflow.xml is the main workflow and it needs to be put under the gwProcess directory. 
+The workflow1.xml is the subworkflow which needs to be put under sqoopIngest directory.
+
+
 # sqoop
 ```
 sqoop import \
