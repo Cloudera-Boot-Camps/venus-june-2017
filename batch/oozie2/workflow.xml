@@ -1,0 +1,54 @@
+<!--******************************************-->
+<!-- workflow.xml                          -->
+<!--******************************************-->
+
+<workflow-app name="GWProcess" xmlns="uri:oozie:workflow:0.1">
+        <start to="subworkflow"/>
+        <action name="subworkflow">
+            <sub-workflow>
+                <app-path>${subwkflowappPath}</app-path>
+                <propagate-configuration/>
+                    <configuration>
+                        <property>
+                            <name>targettableName</name>
+                            <value>${target_table_Name}</value>
+                        </property>
+                        <property>
+                            <name>sourcetableName</name>
+                            <value>${source_table_Name}</value>
+                        </property>
+                    </configuration>
+                </sub-workflow>
+                <ok to="end"/>
+                <error to="killJob" />
+        </action>
+           <action name='java-spark'>
+    <spark xmlns="uri:oozie:spark-action:0.1">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <!--prepare>
+                <delete path="${jobOutput}"/>
+            </prepare-->
+            <configuration>
+                <property>
+                    <name>mapred.compress.map.output</name>
+                    <value>true</value>
+                </property>
+            </configuration>
+            <master>yarn</master>
+            <mode>client</mode>
+            <name>Gravitational Wave</name>
+            <class>com.cloudera.bootcamp.</class>
+            <jar>${nameNode}/user/root/oozie/spark-patent/lib/patentcitation_spark.jar</jar>
+            <spark-opts>--executor-memory 4G --num-executors 10</spark-opts>
+            <arg>${nameNode}</arg>
+            <arg>${nameNode}</arg>
+    </spark>
+    <ok to="end"/>
+    <error to="fail"/>
+    </action>
+        <kill name="killJob">
+            <message>"Killed job due to error: ${wf:errorMessage(wf:lastErrorNode())}"</message>
+        </kill>
+        <end name="end" />
+</workflow-app>

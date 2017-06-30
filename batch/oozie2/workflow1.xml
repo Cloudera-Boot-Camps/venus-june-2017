@@ -1,0 +1,42 @@
+<!--******************************************-->
+<!--workflow.xml                          -->
+<!--******************************************-->
+
+<workflow-app name="sqoopIngest" xmlns="uri:oozie:workflow:0.2">
+        <start to="sqoopAction"/>
+        <action name="sqoopAction">
+                <sqoop xmlns="uri:oozie:sqoop-action:0.2">
+                        <job-tracker>${jobTracker}</job-tracker>
+                        <name-node>${nameNode}</name-node>
+                        <job-xml>${subwkflowappPath}/lib/hive-site.xml</job-xml>
+                        <!--command>export connect jdbc:mysql://cdh-dev01/airawat</command!-->
+                        <arg>import</arg>
+                        <arg>--num-mappers</arg>
+                        <arg>9</arg>
+                        <arg>--connect</arg>
+                        <arg>"jdbc:oracle:thin:@gravity.cghfmcr8k3ia.us-west-2.rds.amazonaws.com:15210:gravity"</arg>
+                        <arg>--username</arg>
+                        <arg>gravity</arg>
+                        <arg>--password</arg>
+                        <arg>bootcamp</arg>
+                        <arg>--direct</arg>
+                        <arg>--create-hive-table</arg>
+                        <arg>--fetch-size</arg>
+                        <arg>10000</arg>
+                        <arg>--table</arg>
+                        <arg>${sourcetableName}</arg>
+                        <arg>--hive-import</arg>
+                        <arg>--hive-database</arg>
+                        <arg>gravity</arg>
+                        <arg>--hive-table</arg>
+                        <arg>${targettableName}</arg>
+                        <arg>--hive-overwrite</arg>
+                </sqoop>
+                <ok to="end"/>
+                <error to="killJob"/>
+        </action>
+        <kill name="killJob">
+            <message>"Killed job due to error: ${wf:errorMessage(wf:lastErrorNode())}"</message>
+        </kill>
+        <end name="end" />
+</workflow-app>
