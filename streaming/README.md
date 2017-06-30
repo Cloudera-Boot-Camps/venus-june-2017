@@ -25,7 +25,7 @@ We decided to create 1 config/agent to write to multiple sinks: hbase, kafka, hd
 # Spark
 This task we used Scala as the spark application. 
 
-* [kafka direct to HBase](../spark/src/main/scala/com/cloudera/bootcamp/Streaming.scala)
+* [kafka direct to HBase](../spark/src/main/scala/com/cloudera/bootcamp/Streaming.scala) - this could be improved by performing a foreachPartition to better manage the connection by batching the inserts by partition
 * [kafka direct to Kudu](../spark/src/main/scala/com/cloudera/bootcamp/Kudu.scala)
 
 # Kafka
@@ -37,12 +37,22 @@ kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --par
 ```
 
 # HBase
-2 tables
-1 measurements only
-
+```
+create 'measurements', 'cf'
+```
+```
+scan 'measurements'
+```
+```
+get 'measurements', '1111', 'cf:amplitude_1'
+```
 
 # Kudu
-Like HBase, can perform UPSERTS
+```
+// Create an instance of a KuduContext
+val kuduContext = new KuduContext("ip-172-31-40-237.us-west-2.compute.internal:7051")
+kuduContext.insertRows(df, "measurements")
+```
 
 # shell
 ```
