@@ -1,0 +1,1 @@
+sudo -u hdfs oozie job -oozie http://ec2-35-167-49-130.us-west-2.compute.amazonaws.com:11000/oozie  -config job.properties -run  

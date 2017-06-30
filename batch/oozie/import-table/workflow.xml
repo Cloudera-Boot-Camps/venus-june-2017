@@ -1,0 +1,42 @@
+<workflow-app name="Venus_Import_Table" xmlns="uri:oozie:workflow:0.5">
+  <global>
+      <job-xml>lib/hive-site.xml</job-xml>
+  </global>
+    <start to="sqoopAction"/>
+    <kill name="Kill">
+        <message>Action failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <action name="sqoopAction">
+        <sqoop xmlns="uri:oozie:sqoop-action:0.2">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <arg>import</arg>
+            <arg>--num-mappers</arg>
+            <arg>1</arg>
+            <arg>--connect</arg> 
+            <arg>jdbc:oracle:thin:@gravity.cghfmcr8k3ia.us-west-2.rds.amazonaws.com:15210:gravity</arg>
+            <arg>--username</arg>
+            <arg>gravity</arg>
+            <arg>--password</arg>
+            <arg>bootcamp</arg>   
+            <arg>--direct</arg>  
+            <arg>--fetch-size</arg> 
+            <arg>10000</arg>
+            <arg>--table</arg>
+            <arg>${sourceTableName}</arg>
+            <arg>--as-parquetfile</arg>
+            <arg>--compress</arg>
+            <arg>--compression-codec</arg>
+            <arg>org.apache.hadoop.io.compress.SnappyCodec</arg>
+            <arg>--hive-import</arg>   
+            <arg>--hive-database</arg>
+            <arg>gravity</arg>   
+            <arg>--hive-overwrite</arg>   
+            <arg>--hive-table</arg>
+            <arg>${targetTableName}</arg>
+        </sqoop>
+        <ok to="End"/>
+        <error to="Kill"/>
+    </action>
+    <end name="End"/>
+</workflow-app>

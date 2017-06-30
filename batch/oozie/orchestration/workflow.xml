@@ -1,0 +1,96 @@
+<workflow-app name="Venus_Import_Table" xmlns="uri:oozie:workflow:0.5">
+  <global>
+      <job-xml>lib/hive-site.xml</job-xml>
+  </global>
+    <start to="forking"/>
+    <kill name="Kill">
+        <message>Action failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    
+    <fork name="forking">
+        <path start="loadDetectors"/>
+        <path start="loadGalaxies"/>
+        <path start="loadAstrophysicists"/>        
+        <path start="loadMeasurements"/>                
+    </fork>
+    
+    <action name="loadDetectors">
+        <sub-workflow>
+            <app-path>/user/hue/oozie/workspaces/import-table/workflow.xml</app-path>
+            <propagate-configuration/>
+            <configuration>
+                <property>
+                    <name>sourceTableName</name>
+                    <value>DETECTORS</value>
+                </property>
+                <property>
+                    <name>targetTableName</name>
+                    <value>detectors</value>
+                </property>                
+            </configuration>
+        </sub-workflow>
+        <ok to="joining"/>
+        <error to="Kill"/>
+    </action>
+
+    <action name="loadGalaxies">
+        <sub-workflow>
+            <app-path>/user/hue/oozie/workspaces/import-table/workflow.xml</app-path>
+            <propagate-configuration/>
+            <configuration>
+                <property>
+                    <name>sourceTableName</name>
+                    <value>GALAXIES</value>
+                </property>
+                <property>
+                    <name>targetTableName</name>
+                    <value>galaxies</value>
+                </property>                
+            </configuration>
+        </sub-workflow>
+        <ok to="joining"/>
+        <error to="Kill"/>
+    </action>
+
+    <action name="loadAstrophysicists">
+        <sub-workflow>
+            <app-path>/user/hue/oozie/workspaces/import-table/workflow.xml</app-path>
+            <propagate-configuration/>
+            <configuration>
+                <property>
+                    <name>sourceTableName</name>
+                    <value>ASTROPHYSICISTS</value>
+                </property>
+                <property>
+                    <name>targetTableName</name>
+                    <value>astrophysicists</value>
+                </property>                
+            </configuration>
+        </sub-workflow>
+        <ok to="joining"/>
+        <error to="Kill"/>
+    </action>
+
+    <action name="loadMeasurements">
+        <sub-workflow>
+            <app-path>/user/hue/oozie/workspaces/import-table/workflow.xml</app-path>
+            <propagate-configuration/>
+            <configuration>
+                <property>
+                    <name>sourceTableName</name>
+                    <value>MEASUREMENTS</value>
+                </property>
+                <property>
+                    <name>targetTableName</name>
+                    <value>measurements</value>
+                </property>                
+            </configuration>
+        </sub-workflow>
+        <ok to="joining"/>
+        <error to="Kill"/>
+    </action>
+    
+    <join name="joining" to="End"/>
+    
+    <end name="End"/>
+</workflow-app>
