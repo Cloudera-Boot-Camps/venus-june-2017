@@ -17,9 +17,9 @@ $> mvn exec:java \
 -Dexec.args="localhost 4444"
 ```
 
-# Flume Configs
-* [flafka](flafka.conf) - reads from netcat source to kafka sink
-* [netcat to hbase and hdfs](net2hbaseAndHdfs.conf) - reads from netcat source to HBase and hdfs (2 sinks)
+# Flume Config
+We decided to create 1 config/agent to write to multiple sinks: hbase, kafka, hdfs
+* [flume config](flume2.conf)
 
 
 # Spark
