@@ -44,8 +44,11 @@ we created an OOZIE flow that called the sqoop ingestion below then the python s
 PFB the directory structure of the workflow.xml.
 
   --> gwProcess/workflow.xml
+
   --> sqoopIngest/workflow.xml
+
   --> sqoopIngest/lib/hive-site.xml
+  
   --> sqoopIngest/lib/ojdbc6.jar
 
 
