@@ -39,6 +39,49 @@ sqoop import \
 
 ```
 
+Important finding of the implementation phase was Sqoop limitations:
+- dynamic partitioning while insertion into partitioned Hive table
+- static partitioning is incompatible with as-parquetfile option, sqoop run fails
+  with number of errors. Solution can benefit either from partitioning or parquet format
+  
+```
+sqoop import \
+  --num-mappers 18 \
+  --connect "jdbc:oracle:thin:@gravity.cghfmcr8k3ia.us-west-2.rds.amazonaws.com:15210:gravity" \
+  --username=gravity \
+  --password=bootcamp \
+  --direct \
+  --fetch-size 10000 \
+  --table measurements \
+  --as-parquetfile \
+  --compress \
+  --compression-codec org.apache.hadoop.io.compress.SnappyCodec  \
+  --hive-import \
+  --hive-database gravity \
+  --hive-table measurements  
+  --hive-overwrite \
+
+sqoop import \
+  --num-mappers 18 \
+  --connect "jdbc:oracle:thin:@gravity.cghfmcr8k3ia.us-west-2.rds.amazonaws.com:15210:gravity" \
+  --username=gravity \
+  --password=bootcamp \
+  --direct \
+  --fetch-size 10000 \
+  --table measurements \
+  --columns measurement_id,astrophysicist_id,measurement_time,amplitude_1,amplitude_2,amplitude_3 \
+  --where "detector_id=1" \
+  --split-by measurement_time \
+  --boundary-query "select 1498501044398, 1498501598662 from dual" \
+  --target-dir /user/hive/warehouse/gravity.db/measurements \
+  --hive-import \
+  --hive-database gravity \
+  --hive-table measurements  
+  --hive-overwrite \
+  --hive-partition-key detector_id \
+  --hive-partition-value 1  
+```
+  
 # Gravitational wave detected was 56
 Retrieving the records. We got 56. Transformation of the amplitudes from string to decimal was necessary to execute the query
 ```
