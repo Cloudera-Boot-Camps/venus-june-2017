@@ -25,7 +25,7 @@ We decided to create 1 config/agent to write to multiple sinks: hbase, kafka, hd
 # Spark
 This task we used Scala as the spark application. 
 
-* [kafka direct to HBase](../spark/src/main/scala/com/cloudera/bootcamp/Main.scala)
+* [kafka direct to HBase](../spark/src/main/scala/com/cloudera/bootcamp/Streaming.scala)
 * [kafka direct to Kudu](../spark/src/main/scala/com/cloudera/bootcamp/Kudu.scala)
 
 # Kafka
