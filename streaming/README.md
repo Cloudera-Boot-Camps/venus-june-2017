@@ -1,13 +1,32 @@
 # Stream processing
+Run measurements stream using the provided data generator
+
+* Build a “generator -> Flume -> HBase” pipeline
+* Then switch out HBase for HDFS
+
+* Build a “generator -> Flume -> Kafka -> Spark Streaming -> HBase” pipeline
+* Then switch out HBase for Kudu
+* First use built-in Spark-Kudu API, then use Envelope
+* Then switch out Kudu for Solr
+
+## Executing the generator from maven
 ```
-export JAVA_HOME=/user/java/jdk1.7 ........
-mvn exec:java -Dexec.mainClass="com.cloudera.fce.bootcamp.MeasurementGenerator" -Dexec.args="ec2-35-167-49-130.us-west-2.compute.amazonaws.com 4444"
+$> export JAVA_HOME=/user/java/jdk1.7 ........
+$> mvn exec:java \
+-Dexec.mainClass="com.cloudera.fce.bootcamp.MeasurementGenerator" \
+-Dexec.args="localhost 4444"
 ```
 
-# Flume Config
+# Flume Configs
+* [flafka](flafka.conf) - reads from netcat source to kafka sink
+* [netcat to hbase and hdfs](net2hbaseAndHdfs.conf) - reads from netcat source to HBase and hdfs (2 sinks)
 
 
-# Kafka 
+# Spark
+This task we used Scala as the spark application.
+
+# Kafka
+## Kafka brokers
 "ip-172-31-38-164.us-west-2.compute.internal:9092,ip-172-31-37-179.us-west-2.compute.internal:9092,ip-172-31-42-170.us-west-2.compute.internal:9092"
 ## Topic
 ```

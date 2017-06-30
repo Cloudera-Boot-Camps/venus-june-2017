@@ -45,7 +45,6 @@ object Streaming extends App {
 
           val con = ConnectionFactory.createConnection()
           try {
-            println("???????????????????" + line)
 
             val table = con.getTable(TableName.valueOf("measurements"))
             val cells = line.split(",")

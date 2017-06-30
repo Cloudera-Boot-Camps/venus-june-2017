@@ -39,17 +39,9 @@ object Main extends App {
     "password"->"bootcamp",
     "driver" -> "oracle.jdbc.driver.OracleDriver")).load()
 
-  val measurements = sqlContext.sql("SELECT * FROM gravity.measure_sm") // hive, sqooped in
+  val measurements = sqlContext.sql("SELECT * FROM gravity.measurements") // hive, sqooped in
   measurements.cache()
 
-  sqlContext.read.text("/user/hive/warehouse/gravity.db/measure_sm/ee4a481fad68b0af-e3a7241300000003_2073792386_data.0.")
-
-
-//  val rdd = measurements.map(row => {
-//    // where cast(amplitude_1 as decimal(20,16)) > 0.995 and cast(amplitude_3 as decimal(20,16)) > 0.995 and cast(amplitude_2 as decimal(20,16)) < 0.005
-//    val flag = row.getString(5).toDouble > 0.995 && row.getString(7).toDouble > 0.995 && row.getString(6).toDouble < 0.005
-//    Row.fromSeq(row.toSeq :+ flag)
-//  })
 
   val flagged = measurements.withColumn("flag", measurements("amplitude_1") > 0.995 && measurements("amplitude_3") > 0.995 && measurements("amplitude_2") < 0.005)
   val joined = flagged.
