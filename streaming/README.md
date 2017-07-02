@@ -27,7 +27,7 @@ This task we used Scala as the spark application.
 
 * [kafka direct to HBase](../spark/src/main/scala/com/cloudera/bootcamp/Streaming.scala) - this could be improved by performing a foreachPartition to better manage the connection by batching the inserts by partition
 * [kafka direct to Kudu](../spark/src/main/scala/com/cloudera/bootcamp/Kudu.scala)
-* [kafka direct to solr](kafka.md)
+* [kafka direct to solr](kafka.md) [work](hbase-solr)
 
 # Kafka
 ## Kafka brokers
