@@ -1,5 +1,7 @@
 package com.cloudera.bootcamp
 
+import java.util
+
 import kafka.serializer.StringDecoder
 import org.apache.hadoop.hbase.TableName
 import org.apache.spark.SparkConf
@@ -40,6 +42,37 @@ object Streaming extends App {
     stream.foreachRDD((rdd, time) => {
 
       if (!rdd.isEmpty()) {
+
+        rdd.foreachPartition(part => {
+
+          val con = ConnectionFactory.createConnection()
+          val table = con.getTable(TableName.valueOf("measurements"))
+          val list = new util.ArrayList[Put]
+          try {
+            while (part.hasNext) {
+              val line = part.next
+              val cells = line.split(",")
+              val put = new Put(Bytes.toBytes(cells(0)))
+              val cf = Bytes.toBytes("cf")
+              put.addColumn(cf, Bytes.toBytes("detector_id"), Bytes.toBytes(cells(1)))
+              put.addColumn(cf, Bytes.toBytes("galaxy_id"), Bytes.toBytes(cells(2)))
+              put.addColumn(cf, Bytes.toBytes("astrophysicist_id"), Bytes.toBytes(cells(3)))
+              put.addColumn(cf, Bytes.toBytes("measurement_time"), Bytes.toBytes(cells(4)))
+              put.addColumn(cf, Bytes.toBytes("amplitude_1"), Bytes.toBytes(cells(5)))
+              put.addColumn(cf, Bytes.toBytes("amplitude_2"), Bytes.toBytes(cells(6)))
+              put.addColumn(cf, Bytes.toBytes("amplitude_3"), Bytes.toBytes(cells(7)))
+              list add put
+            }
+            table.put(list)
+          }
+          catch {
+            case e: Exception => println(e)
+          }
+          finally {
+            con.close()
+          }
+
+        })
 
         rdd.foreach(line => {
 
